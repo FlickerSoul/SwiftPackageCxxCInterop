@@ -1,0 +1,9 @@
+prefix=${pcfiledir}
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: ComplexMath
+Description: A simple math utility library for complex math
+Version: 1.0
+Cflags: -I${includedir}
+Libs: -L${libdir} -lcomplexmath

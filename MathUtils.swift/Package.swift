@@ -22,7 +22,7 @@ struct Lib {
 
 let packageDirectory = Context.packageDirectory
 let externalMathUtilsC = Lib(base: "\(packageDirectory)/Sources/ExternalMathUtilsC", pkName: "math_utils.pk")
-let externalMathUtilsCxx = Lib(base: "\(packageDirectory)/Sources/ExternalMathUtilsCxx", pkName: nil)
+let externalMathUtilsCxx = Lib(base: "\(packageDirectory)/Sources/ExternalMathUtilsCxx", pkName: "complex_math.pk")
 
 let package = Package(
     name: "MathUtils.swift",
@@ -42,13 +42,7 @@ let package = Package(
         .target(
             name: "MathUtilsCxx",
             dependencies: ["ExternalMathUtilsC"],
-            cxxSettings: [
-                .unsafeFlags(["-std=c++17"])
-            ],
-            linkerSettings: [
-                .linkedLibrary("math_utils", .when(platforms: [.macOS])),
-                .unsafeFlags(["-L\(externalMathUtilsC.lib)"]),
-            ]
+            // No linkerSettings because of the presence of `.pk` configs
         ),
         .target(name: "MathUtilsC"),
         .target(
@@ -57,12 +51,7 @@ let package = Package(
             swiftSettings: [
                 .interoperabilityMode(.Cxx)
             ],
-            linkerSettings: [
-                .linkedLibrary("math_utils", .when(platforms: [.macOS])),
-                .unsafeFlags(["-L\(externalMathUtilsC.lib)"]),
-                .linkedLibrary("complexmath", .when(platforms: [.macOS])),
-                .unsafeFlags(["-L\(externalMathUtilsCxx.lib)"]),
-            ],
+            // No linkerSettings because of the presence of `.pk` configs
         ),
         .executableTarget(
             name: "MathUtilsExecutable",
