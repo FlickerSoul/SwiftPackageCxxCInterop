@@ -9,19 +9,17 @@ import Foundation
 
 public func batchEven(of data: [Int32]) -> [String] {
     var mutableData = data
-    let result = mutableData.withUnsafeMutableBufferPointer { buffer in
-        MathUtilsCxx.batchEven(of: buffer.baseAddress, size: Int32(buffer.count))
-    }
-    
+    let result = MathUtilsCxx.batchEven(of: &mutableData, size: mutableData.count)
+
     return result.map { $0.__convertToBool() ? "Even" : "Odd" }
 }
 
 public func isEven(_ number: Int32) -> Bool {
-    return ExternalMathUtilsCWrapper.isEven(number) == 1
+    return ExternalMathUtilsCWrapper.is_even(number) == 1
 }
 
 public func isOdd(_ number: Int32) -> Bool {
-    return ExternalMathUtilsCWrapper.isOdd(number) == 1
+    return ExternalMathUtilsCWrapper.is_odd(number) == 1
 }
 
 public func add(r1: Double, i1: Double, r2: Double, i2: Double) -> (Double, Double) {

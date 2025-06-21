@@ -7,12 +7,12 @@
 
 #include "MathUtilsCxx.hpp"
 
-std::vector<bool> batchEven(int* arr, int size) {
+std::vector<bool> batch_even(int* arr, size_t size) {
     std::vector<bool> results;
     results.reserve(size);
     
     for (int i = 0; i < size; ++i) {
-        bool even = isEven(arr[i]);
+        bool even = is_even(arr[i]);
         results.push_back(even);
     }
 
